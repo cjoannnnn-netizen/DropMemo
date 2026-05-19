@@ -1,0 +1,121 @@
+import { useCallback } from 'react';
+import { Editor } from '@tiptap/react';
+
+interface ToolbarProps {
+  editor: Editor | null;
+  onColorPickerToggle: () => void;
+  onThemePickerToggle: () => void;
+}
+
+const TEXT_COLORS = [
+  { name: '默认', color: '' },
+  { name: '红', color: '#ef4444' },
+  { name: '橙', color: '#f97316' },
+  { name: '黄', color: '#eab308' },
+  { name: '绿', color: '#22c55e' },
+  { name: '蓝', color: '#3b82f6' },
+  { name: '紫', color: '#a855f7' },
+  { name: '粉', color: '#ec4899' },
+];
+
+export { TEXT_COLORS };
+
+export default function Toolbar({ editor, onColorPickerToggle, onThemePickerToggle }: ToolbarProps) {
+  if (!editor) return null;
+
+  const btnClass = (active: boolean) => `toolbar-btn ${active ? 'active' : ''}`;
+
+  return (
+    <div className="toolbar">
+      <div className="toolbar-group">
+        <button
+          className={btnClass(editor.isActive('bold'))}
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          title="加粗 (⌘B)"
+        >
+          <strong>B</strong>
+        </button>
+        <button
+          className={btnClass(editor.isActive('italic'))}
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          title="斜体 (⌘I)"
+        >
+          <em>I</em>
+        </button>
+        <button
+          className={btnClass(editor.isActive('strike'))}
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+          title="删除线 (⌘⇧X)"
+        >
+          <s>S</s>
+        </button>
+      </div>
+
+      <div className="toolbar-divider" />
+
+      <div className="toolbar-group">
+        <button
+          className="toolbar-btn color-btn"
+          onClick={onColorPickerToggle}
+          title="字体颜色"
+        >
+          <span className="color-icon">A</span>
+          <span
+            className="color-indicator"
+            style={{
+              backgroundColor: editor.getAttributes('textStyle').color || 'var(--text-primary)',
+            }}
+          />
+        </button>
+      </div>
+
+      <div className="toolbar-divider" />
+
+      <div className="toolbar-group">
+        <button
+          className={btnClass(editor.isActive('bulletList'))}
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          title="无序列表"
+        >
+          ☰
+        </button>
+        <button
+          className={btnClass(editor.isActive('orderedList'))}
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          title="有序列表"
+        >
+          1.
+        </button>
+        <button
+          className={btnClass(editor.isActive('taskList'))}
+          onClick={() => editor.chain().focus().toggleTaskList().run()}
+          title="待办清单 (⌘⇧9)"
+        >
+          ☑
+        </button>
+      </div>
+
+      <div className="toolbar-divider" />
+
+      <div className="toolbar-group">
+        <button
+          className="toolbar-btn"
+          onClick={() => editor.chain().focus().setHorizontalRule().run()}
+          title="分割线"
+        >
+          ─
+        </button>
+      </div>
+
+      <div className="toolbar-spacer" />
+
+      <button
+        className="toolbar-btn theme-btn"
+        onClick={onThemePickerToggle}
+        title="背景主题"
+      >
+        🎨
+      </button>
+    </div>
+  );
+}
