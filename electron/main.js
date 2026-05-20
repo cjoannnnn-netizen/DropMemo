@@ -240,7 +240,7 @@ function startMouseTracking() {
 
 // ── Tray ──
 function createTray() {
-  const iconPath = path.join(__dirname, '..', 'image.png');
+  const iconPath = path.join(__dirname, '..', 'logo.png');
   let icon = nativeImage.createFromPath(iconPath);
   if (!icon.isEmpty()) {
     icon = icon.resize({ width: 18, height: 18 });

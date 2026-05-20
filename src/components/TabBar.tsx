@@ -41,10 +41,17 @@ export default function TabBar({
 
   const getTabDisplayName = (tab: NoteTab) => {
     if (tab.name) return tab.name;
-    // 从内容提取第一行的文本
-    const textWithNewlines = tab.content.replace(/<\/(p|li|h[1-6]|div)>/g, '\n').replace(/<[^>]*>/g, '').trim();
-    const firstLine = textWithNewlines.split('\n')[0].trim();
-    return firstLine.slice(0, 15) || '新便签';
+    if (!tab.content) return '新便签';
+    // 只取第一个 <p> 或文本节点的纯文本
+    const firstLine = tab.content
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<\/p>/gi, '\n')
+      .replace(/<[^>]*>/g, '')
+      .split('\n')
+      .map(s => s.trim())
+      .find(s => s.length > 0);
+    if (!firstLine) return '新便签';
+    return firstLine.length > 8 ? firstLine.slice(0, 8) + '…' : firstLine;
   };
 
   return (
