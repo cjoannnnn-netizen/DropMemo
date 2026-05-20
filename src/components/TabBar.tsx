@@ -8,6 +8,8 @@ interface TabBarProps {
   onClose: (id: string) => void;
   onRename: (id: string, name: string) => void;
   onSettingsClick: () => void;
+  isPinned: boolean;
+  onTogglePin: () => void;
 }
 
 export default function TabBar({
@@ -18,6 +20,8 @@ export default function TabBar({
   onClose,
   onRename,
   onSettingsClick,
+  isPinned,
+  onTogglePin,
 }: TabBarProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -92,6 +96,24 @@ export default function TabBar({
           </button>
         )}
       </div>
+      <button
+        className={`settings-btn${isPinned ? ' pin-active' : ''}`}
+        onClick={onTogglePin}
+        title={isPinned ? '取消置顶（点击后移开鼠标将自动收起）' : '置顶固定（固定后不会自动收起）'}
+      >
+        {isPinned ? (
+          <svg width="13" height="13" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="11" width="18" height="13" rx="2" fill="currentColor"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+            <circle cx="12" cy="16.5" r="1.5" fill="white"/>
+          </svg>
+        ) : (
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="11" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="2.2"/>
+            <path d="M7 11V7a5 5 0 0 1 9.9-1" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/>
+          </svg>
+        )}
+      </button>
       <button className="settings-btn" onClick={onSettingsClick} title="设置">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="12" cy="12" r="3" />

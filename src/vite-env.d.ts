@@ -8,6 +8,7 @@ interface ElectronAPI {
   exportMarkdown: (params: { filename: string; content: string }) => Promise<{ success: boolean; path?: string; error?: string }>;
   getStoragePath: () => Promise<string>;
   lockPanel: () => void;
+  togglePin: (state: boolean) => void;
   onPanelShow: (callback: () => void) => () => void;
   onPanelHide: (callback: () => void) => () => void;
 }

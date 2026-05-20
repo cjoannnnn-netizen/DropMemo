@@ -1,4 +1,4 @@
-import { TEXT_COLORS } from './Toolbar';
+import { TEXT_COLORS } from '../constants/colors';
 
 interface ColorPickerProps {
   currentColor: string;

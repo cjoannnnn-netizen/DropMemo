@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // 面板锁定（编辑时防收起）
   lockPanel: () => ipcRenderer.send('lock-panel'),
+  togglePin: (state) => ipcRenderer.send('toggle-pin', state),
 
   // 面板显隐事件
   onPanelShow: (callback) => {

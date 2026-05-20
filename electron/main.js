@@ -11,6 +11,7 @@ let isAnimating = false;
 let mouseCheckInterval = null;
 let hideTimeout = null;
 let enterTimeout = null;
+let isPinned = false;
 
 // ── 常量 ──
 const TRIGGER_DELAY = 150;
@@ -142,6 +143,17 @@ function createWindow() {
 // ── 面板显示/隐藏 ──
 function showPanel() {
   if (isVisible || isAnimating || !mainWindow) return;
+
+  // 每次显示前重新计算位置，防止分辨率或多显示器配置变化导致位置错误
+  const display = screen.getPrimaryDisplay();
+  const { width, x: displayX } = display.bounds;
+  const menuBarHeight = display.workArea.y;
+  mainWindow.setPosition(
+    displayX + Math.round((width - PANEL_WIDTH) / 2),
+    menuBarHeight
+  );
+  mainWindow.setSize(PANEL_WIDTH, PANEL_HEIGHT);
+
   isAnimating = true;
   isVisible = true;
 
@@ -216,7 +228,7 @@ function startMouseTracking() {
         clearTimeout(enterTimeout);
         enterTimeout = null;
       }
-      if (isVisible && !hideTimeout) {
+      if (isVisible && !hideTimeout && !isPinned) {
         hideTimeout = setTimeout(() => {
           hidePanel();
           hideTimeout = null;
@@ -321,6 +333,11 @@ function setupIPC() {
       clearTimeout(hideTimeout);
       hideTimeout = null;
     }
+  });
+
+  // 置顶状态
+  ipcMain.on('toggle-pin', (_, state) => {
+    isPinned = state;
   });
 }
 

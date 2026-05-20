@@ -217,6 +217,12 @@ html, body, #root {
   color: var(--text-primary);
 }
 
+.settings-btn.pin-active {
+  background: var(--accent-color);
+  color: #ffffff;
+  opacity: 1;
+}
+
 /* ── 工具栏 ── */
 .toolbar {
   display: flex;

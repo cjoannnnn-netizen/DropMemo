@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Editor } from '@tiptap/react';
+import { TEXT_COLORS } from '../constants/colors';
 
 interface ToolbarProps {
   editor: Editor | null;
@@ -7,18 +8,6 @@ interface ToolbarProps {
   onThemePickerToggle: () => void;
 }
 
-const TEXT_COLORS = [
-  { name: '默认', color: '' },
-  { name: '红', color: '#ef4444' },
-  { name: '橙', color: '#f97316' },
-  { name: '黄', color: '#eab308' },
-  { name: '绿', color: '#22c55e' },
-  { name: '蓝', color: '#3b82f6' },
-  { name: '紫', color: '#a855f7' },
-  { name: '粉', color: '#ec4899' },
-];
-
-export { TEXT_COLORS };
 
 export default function Toolbar({ editor, onColorPickerToggle, onThemePickerToggle }: ToolbarProps) {
   if (!editor) return null;

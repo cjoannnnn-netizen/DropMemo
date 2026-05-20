@@ -27,6 +27,13 @@ export default function App() {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showThemePicker, setShowThemePicker] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
+
+  const handleTogglePin = useCallback(() => {
+    const newState = !isPinned;
+    setIsPinned(newState);
+    window.electronAPI?.togglePin(newState);
+  }, [isPinned]);
 
   // 监听面板显隐
   useEffect(() => {
@@ -105,6 +112,8 @@ export default function App() {
           onClose={closeTab}
           onRename={renameTab}
           onSettingsClick={() => setShowSettings(!showSettings)}
+          isPinned={isPinned}
+          onTogglePin={handleTogglePin}
         />
 
         <Toolbar
