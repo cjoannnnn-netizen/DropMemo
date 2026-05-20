@@ -218,9 +218,14 @@ html, body, #root {
 }
 
 .settings-btn.pin-active {
-  background: var(--accent-color);
-  color: #ffffff;
+  background: #fdd028;
+  color: #1c1c1e;
   opacity: 1;
+}
+
+.settings-btn.pin-active:hover {
+  background: #e5bc24;
+  color: #1c1c1e;
 }
 
 /* ── 工具栏 ── */
